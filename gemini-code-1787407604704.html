@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="default">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>오답노트 Pro</title>
+  <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoi7Jik64u164W47Yq4IFBybyIsInNob3J0X25hbWUiOiLrqLjtpostUHJvIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNmOGZhamYiLCJ0aGVtZV9jb2xvciI6IiMzYjgyZjYifQ==" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+  <style>
+    /* 1. 기본 화이트 & 블루 */
+    :root, html[data-theme="default"] {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-card: #ffffff;
+      --surface-hover: #f1f5f9;
+      --primary: #2563eb;
+      --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      --accent-star: #f59e0b;
+      --accent-flag: #ef4444;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --text-dim: #94a3b8;
+      --border: #e2e8f0;
+      --correct-bg: #dcfce7;
+      --correct-border: #22c55e;
+      --correct-text: #14532d;
+      --wrong-bg: #fee2e2;
+      --wrong-border: #ef4444;
+      --wrong-text: #7f1d1d;
+      --header-bg: rgba(255, 255, 255, 0.9);
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    /* 2. 다크 네이비 */
+    html[data-theme="dark"] {
+      --bg: #0b0f19;
+      --surface: #131b2e;
+      --surface-card: #18223a;
+      --surface-hover: #1f2d4d;
+      --primary: #6366f1;
+      --primary-gradient: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);
+      --accent-star: #f59e0b;
+      --accent-flag: #f43f5e;
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --text-dim: #64748b;
+      --border: #233050;
+      --correct-bg: #064e3b;
+      --correct-border: #10b981;
+      --correct-text: #ecfdf5;
+      --wrong-bg: #4c0519;
+      --wrong-border: #f43f5e;
+      --wrong-text: #fff1f2;
+      --header-bg: rgba(14, 19, 31, 0.9);
+      --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* 3. 가을색 (웜 브라운 & 앰버) */
+    html[data-theme="autumn"] {
+      --bg: #fbf7f4;
+      --surface: #ffffff;
+      --surface-card: #ffffff;
+      --surface-hover: #f5ece5;
+      --primary: #c2410c;
+      --primary-gradient: linear-gradient(135deg, #ea580c 0%, #9a3412 100%);
+      --accent-star: #d97706;
+      --accent-flag: #b91c1c;
+      --text-main: #431407;
+      --text-sub: #7c2d12;
+      --text-dim: #fdba74;
+      --border: #fed7aa;
+      --correct-bg: #ecfccb;
+      --correct-border: #84cc16;
+      --correct-text: #365314;
+      --wrong-bg: #fee2e2;
+      --wrong-border: #ef4444;
+      --wrong-text: #7f1d1d;
+      --header-bg: rgba(251, 247, 244, 0.92);
+      --card-shadow: 0 4px 12px rgba(194, 65, 12, 0.08);
+    }
+
+    /* 4. 봄색 (파스텔 옐로그린 & 민트) */
+    html[data-theme="spring"] {
+      --bg: #f7fee7;
+      --surface: #ffffff;
+      --surface-card: #ffffff;
+      --surface-hover: #ecfccb;
+      --primary: #65a30d;
+      --primary-gradient: linear-gradient(135deg, #84cc16 0%, #4d7c0f 100%);
+      --accent-star: #eab308;
+      --accent-flag: #f43f5e;
+      --text-main: #1a2e05;
+      --text-sub: #365314;
+      --text-dim: #a3e635;
+      --border: #d9f99d;
+      --correct-bg: #dcfce7;
+      --correct-border: #22c55e;
+      --correct-text: #14532d;
+      --wrong-bg: #fee2e2;
+      --wrong-border: #ef4444;
+      --wrong-text: #7f1d1d;
+      --header-bg: rgba(247, 254, 231, 0.92);
+      --card-shadow: 0 4px 12px rgba(101, 163, 13, 0.08);
+    }
+
+    /* 5. 로즈골드색 (샴페인 로즈 & 메탈릭 핑크) */
+    html[data-theme="rosegold"] {
+      --bg: #fff5f5;
+      --surface: #ffffff;
+      --surface-card: #ffffff;
+      --surface-hover: #fae8e8;
+      --primary: #b76e79;
+      --primary-gradient: linear-gradient(135deg, #d49a9e 0%, #a35d68 100%);
+      --accent-star: #d4a373;
+      --accent-flag: #e11d48;
+      --text-main: #4a2c30;
+      --text-sub: #7a4b52;
+      --text-dim: #e8b4b8;
+      --border: #f0d5d7;
+      --correct-bg: #e6f4ea;
+      --correct-border: #57a673;
+      --correct-text: #134e2a;
+      --wrong-bg: #fde8e8;
+      --wrong-border: #d9534f;
+      --wrong-text: #721c24;
+      --header-bg: rgba(255, 245, 245, 0.92);
+      --card-shadow: 0 4px 12px rgba(183, 110, 121, 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background-color: var(--bg); color: var(--text-main); display: flex; justify-content: center; min-height: 100vh; overflow-x: hidden; transition: background-color 0.2s ease, color 0.2s ease; }
+    
+    #app {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      padding-bottom: 20px;
+    }
+
+    header {
+      padding: 16px 20px;
+      background: var(--header-bg);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .header-title { font-size: 1.15rem; font-weight: 700; color: var(--text-main); letter-spacing: -0.02em; }
+    .header-btn { background: none; border: none; color: var(--text-sub); font-size: 0.95rem; cursor: pointer; padding: 6px 10px; border-radius: 8px; }
+    .header-btn:active { background: var(--surface-hover); color: var(--text-main); }
+
+    .content { flex: 1; padding: 20px 16px; overflow-y: auto; }
+
+    .card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: var(--card-shadow);
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+    
+    .stats-banner {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .stat-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+    }
+    .stat-val { font-size: 1.4rem; font-weight: 800; color: var(--primary); }
+    .stat-label { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px 18px;
+      background: var(--primary-gradient);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+      margin-top: 10px;
+      transition: transform 0.1s ease;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-secondary { background: var(--surface); border: 1px solid var(--border); color: var(--text-main); box-shadow: none; }
+    .btn-secondary:active { background: var(--surface-hover); }
+    .btn-warning { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; }
+    .btn-danger { background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); color: white; }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-sub); }
+    .btn-sm { padding: 6px 12px; font-size: 0.8rem; width: auto; border-radius: 8px; margin-top: 0; }
+    
+    label { display: block; font-weight: 600; font-size: 0.82rem; color: var(--text-sub); margin-bottom: 6px; }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--primary); }
+    select option { background: var(--surface); color: var(--text-main); }
+
+    .tag { display: inline-block; padding: 3px 8px; font-size: 0.75rem; font-weight: 600; border-radius: 6px; background: rgba(0, 0, 0, 0.05); color: var(--primary); }
+    .icon-btn { background: none; border: none; font-size: 1.35rem; cursor: pointer; color: var(--text-dim); padding: 4px; border-radius: 6px; }
+    .icon-btn.star.active { color: var(--accent-star); }
+    .icon-btn.flag.active { color: var(--accent-flag); }
+
+    .choice-item {
+      padding: 15px 16px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .choice-item.correct { background: var(--correct-bg); border-color: var(--correct-border); color: var(--correct-text); }
+    .choice-item.wrong { background: var(--wrong-bg); border-color: var(--wrong-border); color: var(--wrong-text); }
+
+    .explanation-box {
+      background: var(--surface-hover);
+      border-left: 3px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      padding: 14px;
+      margin-top: 16px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-sub);
+    }
+
+    .flex-between { display: flex; justify-content: space-between; align-items: center; }
+    .flex-center { display: flex; align-items: center; gap: 8px; }
+    .order-btns { display: flex; gap: 4px; }
+    .order-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text-sub); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; cursor: pointer; }
+
+    /* 테마 선택 바 (5개 분할) */
+    .theme-bar {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .theme-btn {
+      padding: 8px 2px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      background: var(--surface);
+      color: var(--text-main);
+      text-align: center;
+      white-space: nowrap;
+    }
+    .theme-btn.active {
+      border-color: var(--primary);
+      outline: 2px solid var(--primary);
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <button class="header-btn" id="header-back-btn" onclick="showView('home')">← 홈</button>
+    <span class="header-title" id="view-title">문제풀이 노트</span>
+    <div style="width: 32px;"></div>
+  </header>
+  
+  <div class="content" id="view-container"></div>
+</div>
+
+<script>
+// 테마 설정
+function initTheme() {
+  const savedTheme = localStorage.getItem("app_theme") || "default";
+  setTheme(savedTheme);
+}
+
+function setTheme(themeName) {
+  document.documentElement.setAttribute("data-theme", themeName);
+  localStorage.setItem("app_theme", themeName);
+  const btns = document.querySelectorAll(".theme-btn");
+  btns.forEach(b => {
+    b.classList.toggle("active", b.dataset.theme === themeName);
+  });
+}
+
+// IndexedDB 영구 저장
+if (navigator.storage && navigator.storage.persist) {
+  navigator.storage.persist().then(granted => {
+    if (granted) console.log("IndexedDB 영구 저장 모드 활성화");
+  });
+}
+
+let db;
+const DB_NAME = "ModernQuizAppDB";
+const DB_VERSION = 2;
+
+function initDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    request.onupgradeneeded = (e) => {
+      db = e.target.result;
+      if (!db.objectStoreNames.contains("categories")) {
+        const catStore = db.createObjectStore("categories", { keyPath: "id", autoIncrement: true });
+        catStore.createIndex("order", "order", { unique: false });
+      }
+      if (!db.objectStoreNames.contains("questions")) {
+        const qStore = db.createObjectStore("questions", { keyPath: "id", autoIncrement: true });
+        qStore.createIndex("subjectId", "subjectId", { unique: false });
+        qStore.createIndex("unitId", "unitId", { unique: false });
+      }
+    };
+    request.onsuccess = (e) => { db = e.target.result; resolve(db); };
+    request.onerror = (e) => reject(e);
+  });
+}
+
+function dbAction(storeName, mode, callback) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(storeName, mode);
+    const store = tx.objectStore(storeName);
+    const req = callback(store);
+    tx.oncomplete = () => resolve(req ? req.result : undefined);
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+const dbOps = {
+  getCategories: () => dbAction("categories", "readonly", s => s.getAll()),
+  addCategory: (item) => dbAction("categories", "readwrite", s => s.add(item)),
+  updateCategory: (item) => dbAction("categories", "readwrite", s => s.put(item)),
+  deleteCategory: (id) => dbAction("categories", "readwrite", s => s.delete(id)),
+
+  getQuestions: () => dbAction("questions", "readonly", s => s.getAll()),
+  addQuestion: (q) => dbAction("questions", "readwrite", s => s.add(q)),
+  updateQuestion: (q) => dbAction("questions", "readwrite", s => s.put(q)),
+  deleteQuestion: (id) => dbAction("questions", "readwrite", s => s.delete(id))
+};
+
+let categories = [];
+let allQuestions = [];
+let quizList = [];
+let currentQuizIndex = 0;
+let editTargetId = null;
+let returnViewAfterEdit = "manage";
+
+const container = document.getElementById("view-container");
+const viewTitle = document.getElementById("view-title");
+
+async function loadAllData() {
+  categories = await dbOps.getCategories();
+  categories.sort((a, b) => (a.order || 0) - (b.order || 0));
+  categories.forEach(c => {
+    if (c.units) c.units.sort((a, b) => (a.order || 0) - (b.order || 0));
+    else c.units = [];
+  });
+  allQuestions = await dbOps.getQuestions();
+}
+
+async function showView(view, param = null) {
+  await loadAllData();
+  container.innerHTML = "";
+  
+  if (view === "home") {
+    viewTitle.innerText = "문제풀이 노트";
+    renderHome();
+  } else if (view === "category") {
+    viewTitle.innerText = "과목 & 단원 관리";
+    renderCategoryManage();
+  } else if (view === "add") {
+    editTargetId = null;
+    returnViewAfterEdit = "home";
+    viewTitle.innerText = "새 문제 등록";
+    renderForm();
+  } else if (view === "edit") {
+    editTargetId = param.id;
+    returnViewAfterEdit = param.returnView || "manage";
+    viewTitle.innerText = "문제 수정";
+    renderForm(param.id);
+  } else if (view === "select") {
+    viewTitle.innerText = "문제 풀기";
+    renderSelect();
+  } else if (view === "quiz") {
+    renderQuiz();
+  } else if (view === "manage") {
+    viewTitle.innerText = "전체 문제 관리";
+    renderManage();
+  } else if (view === "error_list") {
+    viewTitle.innerText = "문제 오류 탭";
+    renderErrorList();
+  }
+}
+
+// 1. 홈 화면
+function renderHome() {
+  const errCount = allQuestions.filter(q => q.isFlagged).length;
+  const currentTheme = localStorage.getItem("app_theme") || "default";
+
+  container.innerHTML = `
+    <div class="stats-banner">
+      <div class="stat-box">
+        <div class="stat-val">${allQuestions.length}</div>
+        <div class="stat-label">총 문제 수</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" style="color:var(--accent-flag);">${errCount}</div>
+        <div class="stat-label">오류 등록 문제</div>
+      </div>
+    </div>
+
+    <button class="btn" onclick="showView('select')">🚀 문제 풀기 시작</button>
+    <button class="btn btn-secondary" onclick="showView('add')">✏️ 새 문제 등록</button>
+    <button class="btn btn-secondary" onclick="showView('category')">📂 과목 및 단원 관리</button>
+    <button class="btn btn-secondary" onclick="showView('manage')">📋 전체 문제 관리</button>
+    <button class="btn btn-warning" onclick="showView('error_list')">🚩 문제 오류 탭 (${errCount}개)</button>
+    
+    <div style="margin-top: 24px; border-top: 1px solid var(--border); padding-top: 14px;">
+      <label>스프레드시트 / 엑셀(CSV) 데이터 연동</label>
+      <button class="btn btn-outline" onclick="exportCSV()">📊 엑셀 백업 다운로드 (.csv)</button>
+      <button class="btn btn-outline" onclick="document.getElementById('import-csv').click()">📥 엑셀 파일 불러오기 (.csv)</button>
+      <input type="file" id="import-csv" style="display:none" accept=".csv" onchange="importCSV(event)" />
+    </div>
+
+    <div style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 14px;">
+      <label>디자인 테마 변경</label>
+      <div class="theme-bar">
+        <button class="theme-btn ${currentTheme === 'default' ? 'active' : ''}" data-theme="default" onclick="setTheme('default')">기본블루</button>
+        <button class="theme-btn ${currentTheme === 'dark' ? 'active' : ''}" data-theme="dark" onclick="setTheme('dark')">다크네이비</button>
+        <button class="theme-btn ${currentTheme === 'autumn' ? 'active' : ''}" data-theme="autumn" onclick="setTheme('autumn')">가을색</button>
+        <button class="theme-btn ${currentTheme === 'spring' ? 'active' : ''}" data-theme="spring" onclick="setTheme('spring')">봄색</button>
+        <button class="theme-btn ${currentTheme === 'rosegold' ? 'active' : ''}" data-theme="rosegold" onclick="setTheme('rosegold')">로즈골드</button>
+      </div>
+    </div>
+  `;
+}
+
+// 2. 과목 및 단원 전용 관리 화면
+function renderCategoryManage() {
+  let catHtml = categories.map((cat) => {
+    let unitsHtml = cat.units.map((u) => `
+      <div class="card" style="background:var(--surface); margin-bottom:8px; padding:12px;">
+        <div class="flex-between">
+          <span style="font-weight:600; font-size:0.9rem;">${u.name}</span>
+          <div class="flex-center">
+            <div class="order-btns">
+              <button class="order-btn" onclick="moveUnit(${cat.id}, ${u.id}, -1)">▲</button>
+              <button class="order-btn" onclick="moveUnit(${cat.id}, ${u.id}, 1)">▼</button>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="renameUnit(${cat.id}, ${u.id}, '${u.name}')">수정</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteUnit(${cat.id}, ${u.id})">삭제</button>
+          </div>
+        </div>
+      </div>
+    `).join("");
+
+    return `
+      <div class="card">
+        <div class="flex-between" style="margin-bottom: 12px;">
+          <div>
+            <span style="font-size:1.05rem; font-weight:700;">${cat.name}</span>
+            <span class="tag" style="margin-left:6px;">${cat.units.length}개 단원</span>
+          </div>
+          <div class="flex-center">
+            <div class="order-btns">
+              <button class="order-btn" onclick="moveCategory(${cat.id}, -1)">▲</button>
+              <button class="order-btn" onclick="moveCategory(${cat.id}, 1)">▼</button>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="renameCategory(${cat.id}, '${cat.name}')">수정</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteCategory(${cat.id})">삭제</button>
+          </div>
+        </div>
+        
+        <div style="padding-left: 8px; border-left: 2px solid var(--border); margin-bottom: 12px;">
+          ${unitsHtml || "<p style='font-size:0.8rem; color:var(--text-dim); padding:6px 0;'>등록된 단원이 없습니다.</p>"}
+        </div>
+        <button class="btn btn-secondary btn-sm" style="width:100%;" onclick="addUnitPrompt(${cat.id})">+ 단원 추가</button>
+      </div>
+    `;
+  }).join("");
+
+  container.innerHTML = `
+    <div style="margin-bottom: 16px;">
+      <button class="btn" onclick="addCategoryPrompt()">+ 새 과목 등록</button>
+    </div>
+    ${catHtml || "<p style='text-align:center; color:var(--text-dim); padding:40px 0;'>등록된 과목이 없습니다. 먼저 과목을 추가해주세요.</p>"}
+  `;
+}
+
+async function addCategoryPrompt() {
+  const name = prompt("새 과목명을 입력하세요:");
+  if (!name || !name.trim()) return;
+  const newCat = { name: name.trim(), order: categories.length, units: [] };
+  await dbOps.addCategory(newCat);
+  showView("category");
+}
+
+async function renameCategory(catId, oldName) {
+  const name = prompt("과목명을 변경합니다:", oldName);
+  if (!name || !name.trim() || name === oldName) return;
+  const cat = categories.find(c => c.id === catId);
+  cat.name = name.trim();
+  await dbOps.updateCategory(cat);
+  showView("category");
+}
+
+async function deleteCategory(catId) {
+  const count = allQuestions.filter(q => q.subjectId === catId).length;
+  if (confirm(`이 과목과 포함된 단원, 연관된 문제(${count}개)가 모두 삭제됩니다. 삭제하시겠습니까?`)) {
+    const toDelete = allQuestions.filter(q => q.subjectId === catId);
+    for (const q of toDelete) await dbOps.deleteQuestion(q.id);
+    await dbOps.deleteCategory(catId);
+    showView("category");
+  }
+}
+
+async function moveCategory(catId, dir) {
+  const idx = categories.findIndex(c => c.id === catId);
+  if ((dir === -1 && idx === 0) || (dir === 1 && idx === categories.length - 1)) return;
+  const targetIdx = idx + dir;
+  const temp = categories[idx].order;
+  categories[idx].order = categories[targetIdx].order;
+  categories[targetIdx].order = temp;
+  await dbOps.updateCategory(categories[idx]);
+  await dbOps.updateCategory(categories[targetIdx]);
+  showView("category");
+}
+
+async function addUnitPrompt(catId) {
+  const name = prompt("추가할 단원명을 입력하세요:");
+  if (!name || !name.trim()) return;
+  const cat = categories.find(c => c.id === catId);
+  const newUnit = { id: Date.now(), name: name.trim(), order: cat.units.length };
+  cat.units.push(newUnit);
+  await dbOps.updateCategory(cat);
+  showView("category");
+}
+
+async function renameUnit(catId, unitId, oldName) {
+  const name = prompt("단원명을 변경합니다:", oldName);
+  if (!name || !name.trim() || name === oldName) return;
+  const cat = categories.find(c => c.id === catId);
+  const unit = cat.units.find(u => u.id === unitId);
+  unit.name = name.trim();
+  await dbOps.updateCategory(cat);
+  showView("category");
+}
+
+async function deleteUnit(catId, unitId) {
+  const count = allQuestions.filter(q => q.unitId === unitId).length;
+  if (confirm(`단원과 속한 모든 문제(${count}개)가 함께 삭제됩니다. 계속하시겠습니까?`)) {
+    const toDelete = allQuestions.filter(q => q.unitId === unitId);
+    for (const q of toDelete) await dbOps.deleteQuestion(q.id);
+    const cat = categories.find(c => c.id === catId);
+    cat.units = cat.units.filter(u => u.id !== unitId);
+    await dbOps.updateCategory(cat);
+    showView("category");
+  }
+}
+
+async function moveUnit(catId, unitId, dir) {
+  const cat = categories.find(c => c.id === catId);
+  const idx = cat.units.findIndex(u => u.id === unitId);
+  if ((dir === -1 && idx === 0) || (dir === 1 && idx === cat.units.length - 1)) return;
+  const targetIdx = idx + dir;
+  const temp = cat.units[idx].order;
+  cat.units[idx].order = cat.units[targetIdx].order;
+  cat.units[targetIdx].order = temp;
+  await dbOps.updateCategory(cat);
+  showView("category");
+}
+
+// 3. 문제 등록 및 수정 폼
+function renderForm(targetId = null) {
+  if (categories.length === 0) {
+    container.innerHTML = `
+      <div class="card" style="text-align:center; padding:30px 16px;">
+        <p style="color:var(--text-sub); margin-bottom:16px;">등록된 과목이 없습니다.<br/>먼저 과목과 단원을 등록해주세요.</p>
+        <button class="btn" onclick="showView('category')">과목 & 단원 등록하러 가기</button>
+      </div>
+    `;
+    return;
+  }
+
+  let target = null;
+  if (targetId) target = allQuestions.find(q => q.id === targetId);
+  let defaultCatId = target ? target.subjectId : categories[0].id;
+
+  container.innerHTML = `
+    <label>과목 선택</label>
+    <select id="form-cat-select" onchange="updateFormUnitDropdown()">
+      ${categories.map(c => `<option value="${c.id}" ${c.id === defaultCatId ? 'selected' : ''}>${c.name}</option>`).join("")}
+    </select>
+
+    <label>단원 선택</label>
+    <select id="form-unit-select"></select>
+
+    <label>문제 유형</label>
+    <select id="type-select" onchange="toggleTypeFields()">
+      <option value="4choice" ${target && target.type === '4choice' ? 'selected' : ''}>4지 선다</option>
+      <option value="ox" ${target && target.type === 'ox' ? 'selected' : ''}>OX 문제</option>
+    </select>
+
+    <label>문제 지문</label>
+    <textarea id="q-text" rows="3" placeholder="문제를 입력하세요">${target ? target.question : ''}</textarea>
+    
+    <div id="4choice-fields" style="display: ${!target || target.type === '4choice' ? 'block' : 'none'};">
+      <label>보기 1</label><input type="text" id="opt1" value="${target && target.type === '4choice' ? target.options[0] : ''}" />
+      <label>보기 2</label><input type="text" id="opt2" value="${target && target.type === '4choice' ? target.options[1] : ''}" />
+      <label>보기 3</label><input type="text" id="opt3" value="${target && target.type === '4choice' ? target.options[2] : ''}" />
+      <label>보기 4</label><input type="text" id="opt4" value="${target && target.type === '4choice' ? target.options[3] : ''}" />
+      <label>정답 번호</label>
+      <select id="ans-select-4">
+        <option value="1" ${target && target.answer == '1' ? 'selected' : ''}>1번</option>
+        <option value="2" ${target && target.answer == '2' ? 'selected' : ''}>2번</option>
+        <option value="3" ${target && target.answer == '3' ? 'selected' : ''}>3번</option>
+        <option value="4" ${target && target.answer == '4' ? 'selected' : ''}>4번</option>
+      </select>
+    </div>
+
+    <div id="ox-fields" style="display: ${target && target.type === 'ox' ? 'block' : 'none'};">
+      <label>정답</label>
+      <select id="ans-select-ox">
+        <option value="O" ${target && target.answer === 'O' ? 'selected' : ''}>O</option>
+        <option value="X" ${target && target.answer === 'X' ? 'selected' : ''}>X</option>
+      </select>
+    </div>
+
+    <label>해설</label>
+    <textarea id="exp-text" rows="3" placeholder="해설을 입력하세요">${target ? target.explanation : ''}</textarea>
+    
+    <button class="btn" onclick="saveQuestion()">${target ? '수정 완료' : '등록 완료'}</button>
+    ${target ? `<button class="btn btn-secondary" onclick="showView(returnViewAfterEdit)">취소</button>` : ''}
+  `;
+
+  updateFormUnitDropdown(target ? target.unitId : null);
+}
+
+function updateFormUnitDropdown(selectedUnitId = null) {
+  const catId = Number(document.getElementById("form-cat-select").value);
+  const cat = categories.find(c => c.id === catId);
+  const unitSelect = document.getElementById("form-unit-select");
+  if (!cat || cat.units.length === 0) {
+    unitSelect.innerHTML = "<option value=''>단원 없음 (단원을 먼저 추가하세요)</option>";
+    return;
+  }
+  unitSelect.innerHTML = cat.units.map(u => `
+    <option value="${u.id}" ${selectedUnitId && u.id === selectedUnitId ? 'selected' : ''}>${u.name}</option>
+  `).join("");
+}
+
+function toggleTypeFields() {
+  const type = document.getElementById("type-select").value;
+  document.getElementById("4choice-fields").style.display = type === "4choice" ? "block" : "none";
+  document.getElementById("ox-fields").style.display = type === "ox" ? "block" : "none";
+}
+
+async function saveQuestion() {
+  const catId = Number(document.getElementById("form-cat-select").value);
+  const unitId = Number(document.getElementById("form-unit-select").value);
+  const type = document.getElementById("type-select").value;
+  const question = document.getElementById("q-text").value.trim();
+  const explanation = document.getElementById("exp-text").value.trim();
+
+  if (!catId || !unitId) {
+    alert("과목과 단원을 선택해주세요.");
+    return;
+  }
+  if (!question) {
+    alert("문제를 입력해주세요.");
+    return;
+  }
+
+  let options = [];
+  let answer = "";
+
+  if (type === "4choice") {
+    options = [
+      document.getElementById("opt1").value.trim(),
+      document.getElementById("opt2").value.trim(),
+      document.getElementById("opt3").value.trim(),
+      document.getElementById("opt4").value.trim()
+    ];
+    answer = document.getElementById("ans-select-4").value;
+  } else {
+    options = ["O", "X"];
+    answer = document.getElementById("ans-select-ox").value;
+  }
+
+  if (editTargetId) {
+    const existing = allQuestions.find(q => q.id === editTargetId);
+    existing.subjectId = catId;
+    existing.unitId = unitId;
+    existing.type = type;
+    existing.question = question;
+    existing.options = options;
+    existing.answer = answer;
+    existing.explanation = explanation;
+    await dbOps.updateQuestion(existing);
+    
+    const qIdx = quizList.findIndex(q => q.id === editTargetId);
+    if (qIdx !== -1) quizList[qIdx] = { ...existing };
+    
+    alert("수정되었습니다.");
+    showView(returnViewAfterEdit);
+  } else {
+    const newQ = {
+      subjectId: catId,
+      unitId: unitId,
+      type, question, options, answer, explanation,
+      totalAttempts: 0,
+      wrongAttempts: 0,
+      isStarred: false,
+      isFlagged: false
+    };
+    await dbOps.addQuestion(newQ);
+    alert("등록되었습니다.");
+    showView("home");
+  }
+}
+
+// 4. 문제 풀기 선택
+function renderSelect() {
+  let catOptions = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join("");
+
+  container.innerHTML = `
+    <label>문제 유형</label>
+    <select id="sel-type">
+      <option value="4choice">4지 선다</option>
+      <option value="ox">OX 문제</option>
+    </select>
+
+    <label>학습 범위</label>
+    <select id="sel-scope" onchange="toggleScopeInputs()">
+      <option value="subject">과목 전체 (랜덤 20제)</option>
+      <option value="unit">단원별 풀기 (전체)</option>
+      <option value="star">중요(★) 문제 풀기</option>
+      <option value="wrong">오답 문제 풀기</option>
+      <option value="flagged">문제 오류(🚩) 풀기</option>
+    </select>
+
+    <div id="subject-wrap">
+      <label>과목 선택</label>
+      <select id="sel-subject" onchange="updateQuizUnits()">${catOptions}</select>
+    </div>
+
+    <div id="unit-wrap" style="display: none;">
+      <label>단원 선택</label>
+      <select id="sel-unit"></select>
+    </div>
+
+    <button class="btn" style="margin-top: 20px;" onclick="startQuiz()">풀기 시작</button>
+  `;
+  updateQuizUnits();
+}
+
+function toggleScopeInputs() {
+  const scope = document.getElementById("sel-scope").value;
+  document.getElementById("subject-wrap").style.display = (scope === "subject" || scope === "unit") ? "block" : "none";
+  document.getElementById("unit-wrap").style.display = scope === "unit" ? "block" : "none";
+}
+
+function updateQuizUnits() {
+  const selCatId = Number(document.getElementById("sel-subject").value);
+  const cat = categories.find(c => c.id === selCatId);
+  const unitSelect = document.getElementById("sel-unit");
+  if (cat && cat.units.length > 0) {
+    unitSelect.innerHTML = cat.units.map(u => `<option value="${u.id}">${u.name}</option>`).join("");
+  } else {
+    unitSelect.innerHTML = "<option value=''>단원 없음</option>";
+  }
+}
+
+function startQuiz() {
+  const type = document.getElementById("sel-type").value;
+  const scope = document.getElementById("sel-scope").value;
+  const subjId = Number(document.getElementById("sel-subject").value);
+  const unitId = Number(document.getElementById("sel-unit").value);
+
+  let filtered = allQuestions.filter(q => q.type === type);
+
+  if (scope === "subject") {
+    filtered = filtered.filter(q => q.subjectId === subjId);
+    filtered.sort(() => Math.random() - 0.5);
+    filtered = filtered.slice(0, 20);
+  } else if (scope === "unit") {
+    filtered = filtered.filter(q => q.subjectId === subjId && q.unitId === unitId);
+    filtered.sort(() => Math.random() - 0.5);
+  } else if (scope === "star") {
+    filtered = filtered.filter(q => q.isStarred);
+    filtered.sort(() => Math.random() - 0.5);
+  } else if (scope === "wrong") {
+    filtered = filtered.filter(q => q.wrongAttempts > 0);
+    filtered.sort(() => Math.random() - 0.5);
+  } else if (scope === "flagged") {
+    filtered = filtered.filter(q => q.isFlagged);
+    filtered.sort(() => Math.random() - 0.5);
+  }
+
+  if (filtered.length === 0) {
+    alert("해당 조건의 문제가 없습니다.");
+    return;
+  }
+
+  quizList = filtered;
+  currentQuizIndex = 0;
+  showView("quiz");
+}
+
+// 5. 퀴즈 실행
+function renderQuiz() {
+  if (currentQuizIndex >= quizList.length) {
+    container.innerHTML = `
+      <div class="card" style="text-align: center; padding: 40px 16px;">
+        <h3 style="font-size:1.3rem; margin-bottom:8px;">🎉 학습 완료</h3>
+        <p style="color:var(--text-sub); margin-bottom: 20px;">모든 문제를 풀었습니다.</p>
+        <button class="btn" onclick="showView('home')">홈으로 이동</button>
+      </div>
+    `;
+    return;
+  }
+
+  const q = quizList[currentQuizIndex];
+  viewTitle.innerText = `문제 (${currentQuizIndex + 1}/${quizList.length})`;
+
+  const catName = getCategoryName(q.subjectId);
+  const unitName = getUnitName(q.subjectId, q.unitId);
+
+  let choicesHtml = "";
+  if (q.type === "4choice") {
+    choicesHtml = q.options.map((opt, idx) => `
+      <div class="choice-item" id="choice-${idx+1}" onclick="checkAnswer(${idx+1})">
+        <span style="color:var(--primary); font-weight:700;">${idx+1}.</span>
+        <span>${opt}</span>
+      </div>
+    `).join("");
+  } else {
+    choicesHtml = `
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="choice-item" style="justify-content:center; font-size:1.3rem;" id="choice-O" onclick="checkAnswer('O')">O</div>
+        <div class="choice-item" style="justify-content:center; font-size:1.3rem;" id="choice-X" onclick="checkAnswer('X')">X</div>
+      </div>
+    `;
+  }
+
+  container.innerHTML = `
+    <div class="card">
+      <div class="flex-between">
+        <div>
+          <span class="tag">${catName}</span>
+          <span class="tag" style="background:var(--surface-hover); color:var(--text-sub);">${unitName}</span>
+        </div>
+        <div class="flex-center">
+          <button class="btn btn-secondary btn-sm" onclick="showView('edit', {id: ${q.id}, returnView: 'quiz'})">수정</button>
+          <button class="icon-btn flag ${q.isFlagged ? 'active' : ''}" onclick="toggleQuizFlag(${q.id})">🚩</button>
+          <button class="icon-btn star ${q.isStarred ? 'active' : ''}" onclick="toggleQuizStar(${q.id})">★</button>
+        </div>
+      </div>
+      
+      <div style="font-size:0.8rem; color:var(--text-dim); margin: 8px 0 16px 0;">
+        푼 횟수: ${q.totalAttempts}회 | 오답: ${q.wrongAttempts}회
+        ${q.isFlagged ? '<span style="color:var(--accent-flag); font-weight:bold;">[문제 오류]</span>' : ''}
+      </div>
+
+      <div style="font-size: 1.05rem; font-weight: 600; line-height: 1.5; margin-bottom: 20px;">
+        ${q.question}
+      </div>
+
+      <div id="choice-container">${choicesHtml}</div>
+
+      <div id="result-container" style="display: none;">
+        <div class="explanation-box">
+          <strong style="color:var(--primary);">💡 해설</strong><br/>
+          ${q.explanation || "등록된 해설이 없습니다."}
+        </div>
+        <button class="btn" style="margin-top: 16px;" onclick="nextQuestion()">다음 문제 →</button>
+      </div>
+    </div>
+  `;
+}
+
+async function checkAnswer(selected) {
+  const q = quizList[currentQuizIndex];
+  const isCorrect = String(selected) === String(q.answer);
+
+  q.totalAttempts += 1;
+  if (!isCorrect) q.wrongAttempts += 1;
+  await dbOps.updateQuestion(q);
+
+  const items = document.querySelectorAll(".choice-item");
+  items.forEach(el => el.style.pointerEvents = "none");
+
+  const selectedEl = document.getElementById(`choice-${selected}`);
+  if (selectedEl) selectedEl.classList.add(isCorrect ? "correct" : "wrong");
+
+  if (!isCorrect) {
+    const correctEl = document.getElementById(`choice-${q.answer}`);
+    if (correctEl) correctEl.classList.add("correct");
+  }
+
+  document.getElementById("result-container").style.display = "block";
+}
+
+async function toggleQuizStar(id) {
+  const q = quizList.find(item => item.id === id);
+  if (q) {
+    q.isStarred = !q.isStarred;
+    await dbOps.updateQuestion(q);
+    renderQuiz();
+  }
+}
+
+async function toggleQuizFlag(id) {
+  const q = quizList.find(item => item.id === id);
+  if (q) {
+    q.isFlagged = !q.isFlagged;
+    await dbOps.updateQuestion(q);
+    renderQuiz();
+  }
+}
+
+function nextQuestion() {
+  currentQuizIndex++;
+  renderQuiz();
+}
+
+// 6. 문제 관리 & 오류 탭
+function renderManage() {
+  renderQuestionCards(allQuestions, "manage");
+}
+
+function renderErrorList() {
+  const errorQuestions = allQuestions.filter(q => q.isFlagged);
+  if (errorQuestions.length === 0) {
+    container.innerHTML = "<p style='text-align:center; color:var(--text-dim); padding: 40px 0;'>오류로 표시된 문제가 없습니다.</p>";
+    return;
+  }
+  renderQuestionCards(errorQuestions, "error_list");
+}
+
+function renderQuestionCards(questions, currentViewName) {
+  let listHtml = questions.map(q => {
+    const catName = getCategoryName(q.subjectId);
+    const unitName = getUnitName(q.subjectId, q.unitId);
+
+    return `
+      <div class="card">
+        <div class="flex-between">
+          <div>
+            <span class="tag">${catName}</span>
+            <span class="tag" style="background:var(--surface-hover); color:var(--text-sub);">${unitName}</span>
+            <span class="tag" style="background:var(--surface-hover); color:var(--text-sub);">${q.type === '4choice' ? '4지선다' : 'OX'}</span>
+          </div>
+          <div>
+            <button class="icon-btn flag ${q.isFlagged ? 'active' : ''}" onclick="toggleCardFlag(${q.id}, '${currentViewName}')">🚩</button>
+            <button class="icon-btn star ${q.isStarred ? 'active' : ''}" onclick="toggleCardStar(${q.id}, '${currentViewName}')">★</button>
+          </div>
+        </div>
+
+        <div style="margin: 12px 0 8px 0; font-weight: 600; font-size: 0.95rem;">${q.question}</div>
+        
+        <div style="font-size:0.78rem; color:var(--text-dim); margin-bottom:12px;">
+          푼 횟수: ${q.totalAttempts}회 | 오답: ${q.wrongAttempts}회
+          ${q.isFlagged ? '<span style="color:var(--accent-flag); font-weight:bold;">| 문제 오류</span>' : ''}
+        </div>
+
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-secondary btn-sm" onclick="showView('edit', {id: ${q.id}, returnView: '${currentViewName}'})">수정</button>
+          ${q.wrongAttempts > 0 ? `<button class="btn btn-secondary btn-sm" onclick="resetWrongCount(${q.id}, '${currentViewName}')">오답기록 삭제</button>` : ''}
+          <button class="btn btn-danger btn-sm" onclick="deleteQuestion(${q.id}, '${currentViewName}')">삭제</button>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  container.innerHTML = listHtml || "<p style='text-align:center; color:var(--text-dim); padding: 40px 0;'>등록된 문제가 없습니다.</p>";
+}
+
+function getCategoryName(catId) {
+  const cat = categories.find(c => c.id === catId);
+  return cat ? cat.name : "미지정";
+}
+function getUnitName(catId, unitId) {
+  const cat = categories.find(c => c.id === catId);
+  if (!cat) return "미지정";
+  const unit = cat.units.find(u => u.id === unitId);
+  return unit ? unit.name : "미지정";
+}
+
+async function toggleCardStar(id, returnView) {
+  const q = allQuestions.find(item => item.id === id);
+  if (q) {
+    q.isStarred = !q.isStarred;
+    await dbOps.updateQuestion(q);
+    showView(returnView);
+  }
+}
+
+async function toggleCardFlag(id, returnView) {
+  const q = allQuestions.find(item => item.id === id);
+  if (q) {
+    q.isFlagged = !q.isFlagged;
+    await dbOps.updateQuestion(q);
+    showView(returnView);
+  }
+}
+
+async function resetWrongCount(id, returnView) {
+  const q = allQuestions.find(item => item.id === id);
+  if (q) {
+    q.wrongAttempts = 0;
+    await dbOps.updateQuestion(q);
+    showView(returnView);
+  }
+}
+
+async function deleteQuestion(id, returnView) {
+  if (confirm("이 문제를 삭제하시겠습니까?")) {
+    await dbOps.deleteQuestion(id);
+    showView(returnView);
+  }
+}
+
+// 7. CSV 백업 & 복원
+function escapeCSV(str) {
+  if (str === null || str === undefined) return '""';
+  const text = String(str).replace(/"/g, '""');
+  return `"${text}"`;
+}
+
+function exportCSV() {
+  if (allQuestions.length === 0) {
+    alert("내보낼 문제가 없습니다.");
+    return;
+  }
+
+  const headers = ["과목", "단원", "유형(4choice/ox)", "문제지문", "보기1", "보기2", "보기3", "보기4", "정답", "해설", "푼횟수", "오답횟수", "중요(TRUE/FALSE)", "오류(TRUE/FALSE)"];
+  const rows = [headers.join(",")];
+
+  for (const q of allQuestions) {
+    const catName = getCategoryName(q.subjectId);
+    const unitName = getUnitName(q.subjectId, q.unitId);
+    const opt1 = q.type === '4choice' ? (q.options[0] || '') : '';
+    const opt2 = q.type === '4choice' ? (q.options[1] || '') : '';
+    const opt3 = q.type === '4choice' ? (q.options[2] || '') : '';
+    const opt4 = q.type === '4choice' ? (q.options[3] || '') : '';
+
+    const row = [
+      escapeCSV(catName),
+      escapeCSV(unitName),
+      escapeCSV(q.type),
+      escapeCSV(q.question),
+      escapeCSV(opt1),
+      escapeCSV(opt2),
+      escapeCSV(opt3),
+      escapeCSV(opt4),
+      escapeCSV(q.answer),
+      escapeCSV(q.explanation),
+      q.totalAttempts || 0,
+      q.wrongAttempts || 0,
+      q.isStarred ? "TRUE" : "FALSE",
+      q.isFlagged ? "TRUE" : "FALSE"
+    ];
+    rows.push(row.join(","));
+  }
+
+  const csvContent = "\uFEFF" + rows.join("\r\n");
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.setAttribute("download", `quiz_backup_${new Date().toISOString().slice(0,10)}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function parseCSV(text) {
+  let p = '', c = '', r = [];
+  let q = false;
+  let row = [''];
+  for (let i = 0; i < text.length; i++) {
+    c = text[i];
+    let next = text[i+1];
+    if (c === '"') {
+      if (q && next === '"') { row[row.length - 1] += '"'; i++; }
+      else { q = !q; }
+    } else if (c === ',' && !q) {
+      row.push('');
+    } else if ((c === '\r' || c === '\n') && !q) {
+      if (c === '\r' && next === '\n') i++;
+      r.push(row);
+      row = [''];
+    } else {
+      row[row.length - 1] += c;
+    }
+  }
+  if (row.length > 1 || row[0] !== '') r.push(row);
+  return r;
+}
+
+async function importCSV(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = async function(e) {
+    try {
+      const text = e.target.result;
+      const data = parseCSV(text);
+
+      if (data.length <= 1) {
+        alert("데이터가 비어있는 CSV 파일입니다.");
+        return;
+      }
+
+      const rows = data.slice(1);
+      let importedCount = 0;
+
+      for (const row of rows) {
+        if (row.length < 9) continue;
+        const subjName = row[0] ? row[0].trim() : "일반";
+        const unitName = row[1] ? row[1].trim() : "기본단원";
+        const type = (row[2] && row[2].trim().toLowerCase() === 'ox') ? 'ox' : '4choice';
+        const question = row[3] ? row[3].trim() : '';
+        if (!question) continue;
+
+        const opt1 = row[4] ? row[4].trim() : '';
+        const opt2 = row[5] ? row[5].trim() : '';
+        const opt3 = row[6] ? row[6].trim() : '';
+        const opt4 = row[7] ? row[7].trim() : '';
+        const answer = row[8] ? row[8].trim() : (type === 'ox' ? 'O' : '1');
+        const explanation = row[9] ? row[9].trim() : '';
+        const totalAttempts = Number(row[10]) || 0;
+        const wrongAttempts = Number(row[11]) || 0;
+        const isStarred = String(row[12]).trim().toUpperCase() === "TRUE";
+        const isFlagged = String(row[13]).trim().toUpperCase() === "TRUE";
+
+        let cat = categories.find(c => c.name === subjName);
+        if (!cat) {
+          const newCat = { name: subjName, order: categories.length, units: [] };
+          const catId = await dbOps.addCategory(newCat);
+          newCat.id = catId;
+          categories.push(newCat);
+          cat = newCat;
+        }
+
+        let unit = cat.units.find(u => u.name === unitName);
+        if (!unit) {
+          unit = { id: Date.now() + Math.floor(Math.random()*1000), name: unitName, order: cat.units.length };
+          cat.units.push(unit);
+          await dbOps.updateCategory(cat);
+        }
+
+        let options = [];
+        if (type === '4choice') {
+          options = [opt1, opt2, opt3, opt4];
+        } else {
+          options = ['O', 'X'];
+        }
+
+        const newQ = {
+          subjectId: cat.id,
+          unitId: unit.id,
+          type,
+          question,
+          options,
+          answer,
+          explanation,
+          totalAttempts,
+          wrongAttempts,
+          isStarred,
+          isFlagged
+        };
+        await dbOps.addQuestion(newQ);
+        importedCount++;
+      }
+
+      alert(`성공적으로 ${importedCount}개의 문제를 불러왔습니다.`);
+      showView("home");
+    } catch (err) {
+      console.error(err);
+      alert("CSV 파일을 분석하는 도중 오류가 발생했습니다.");
+    }
+  };
+  reader.readAsText(file, "UTF-8");
+}
+
+initTheme();
+initDB().then(() => {
+  showView("home");
+});
+</script>
+</body>
+</html>
